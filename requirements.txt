@@ -1,5 +1,4 @@
 feedparser==6.0.2
-urllib3==1.25.9
 json5==0.9.5
 altair==4.1.0
 argon2-cffi==20.1.0
