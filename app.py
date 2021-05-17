@@ -121,12 +121,31 @@ def main():
                 print(f"No data returned for {s}")
 
 
+
         df = pd.DataFrame(data=data, columns=columns)
-        st.dataframe(df)
+        
+        ###################### New Edits ##############
+        # config path
+        cfg_path = "config/config.yaml"
+        cfg = yaml.safe_load(open(cfg_path))
+
+        outlet_df = pd.read_csv('outlet_reference.csv')
+
+        # create temp df
+        tmp_df = pd.DataFrame(columns=[*range(42)])
+        tmp_df = tmp_df.rename(columns=cfg["tracker_cols"])
+
+        new_df = tmp_df.append(df)
+        new_df[['Outlet Reach (Weekly)','Outlet Reach (Monthly)']] = new_df[['Outlet Reach (Weekly)','Outlet Reach (Monthly)']].apply(pd.to_numeric)
+
+        output_df = pd.merge(df, outlet_df, on="Outlet Name", how="left")
+        output_df = pd.concat([tmp_df, output_df])
+
+        st.dataframe(output_df)
 
         # write to file for download
         tmp_download_link = download_link(
-            df,
+            output_df,
             "output.csv",
             "Click here to download!",
         )
