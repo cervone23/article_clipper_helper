@@ -126,7 +126,7 @@ def main():
         
         ###################### New Edits ##############
         # config path
-        cfg_path = "config/config.yaml"
+        cfg_path = "config.yaml"
         cfg = yaml.safe_load(open(cfg_path))
 
         outlet_df = pd.read_csv('outlet_reference.csv')
