@@ -138,16 +138,16 @@ def main():
         new_df = tmp_df.append(df)
         new_df[['Outlet Reach (Weekly)','Outlet Reach (Monthly)']] = new_df[['Outlet Reach (Weekly)','Outlet Reach (Monthly)']].apply(pd.to_numeric)
 
-        output_df = pd.merge(df, outlet_df, on="Outlet Name", how="left")
-        output_df = pd.concat([tmp_df, output_df])
+        output_df_one = pd.merge(df, outlet_df, on="Outlet Name", how="left")
+        output_df = pd.concat([tmp_df, output_df_one])
 
-        st.dataframe(output_df)
+        st.dataframe(output_df_one)
 
-        # write to file for download
+        # write to file for download in Tracker Format
         tmp_download_link = download_link(
             output_df,
             "output.csv",
-            "Click here to download!",
+            "Click here to download in Tracker Format!",
         )
         st.markdown(tmp_download_link, unsafe_allow_html=True)
 
